@@ -1,0 +1,2 @@
+# AutomaticToyokoInnReservation
+設定した条件で東横イン公式HPをクロールして空き部屋があれば予約するスクリプトです。
