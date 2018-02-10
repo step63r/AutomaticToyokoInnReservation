@@ -10,8 +10,7 @@ import FileLogger
 
 if __name__ == "__main__":
     # コマンドライン引数取得
-    #CHK_DATE = sys.argv[1]
-    CHK_DATE = '2018/03/30'
+    CHK_DATE = sys.argv[1]
 
     # 設定ファイル読込
     settings = ConfigParser.SafeConfigParser()
