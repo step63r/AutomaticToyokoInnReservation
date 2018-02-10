@@ -45,7 +45,7 @@ def GetReservation(driver, CHK_DATE):
     driver.get("{0}search/detail//{1}".format(BASE_URL, HOTEL_ID))
     FileLogger.logger.log_info(u"予約ページへ移動中")
     # 予約ページへ
-    driver.get("{0}search/reserve/room?chckn_date={0}&room_type={1}".format(BASE_URL, CHK_DATE, ROOM_TYPE))
+    driver.get("{0}search/reserve/room?chckn_date={1}&room_type={2}".format(BASE_URL, CHK_DATE, ROOM_TYPE))
     
     if ENABLE_NOSMOKING == '1':
         FileLogger.logger.log_info(u"禁煙ルームを検索中")
