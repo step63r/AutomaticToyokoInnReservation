@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>AutomaticToyokoInnReservation</Name>
     <RootNamespace>AutomaticToyokoInnReservation</RootNamespace>
-    <InterpreterId>Global|ContinuumAnalytics|Anaconda27-32</InterpreterId>
+    <InterpreterId>Global|PythonCore|2.7</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,13 +26,16 @@
     <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="XPathConfig.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|ContinuumAnalytics|Anaconda27-32" />
+    <InterpreterReference Include="Global|PythonCore|2.7" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CrawlConfig.ini" />
-    <Content Include="CrawlLogger.py" />
+    <Content Include="FileLogger.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
