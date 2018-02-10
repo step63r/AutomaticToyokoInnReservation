@@ -26,12 +26,12 @@ pip install selenium
 | LOG_PATH | ログファイルパス（適当に） |
 | HOTEL_ID | ホテル詳細ページのURLの「.../detail/XXXXX」の数値 |
 | ROOM_TYPE | iniのコメントにある通り |
-| CHK_DATE | チェックイン日付（1月なら 01 などとする） |
 | LOGIN_ADDRESS | 東横インアカウントのメールアドレス |
 | LOGIN_PASS | 東横インアカウントのパスワード |
 | LOGIN_TEL | 電話番号 |
 | ENABLE_NOSMOKING | 禁煙ルームを検索する場合は 1 |
 | ENABLE_SMOKING | 喫煙ルームを検索する場合は 1 |
+| CHKIN_VALUE | チェックイン時刻 |
 
 ## CHKIN_VALUEに設定できる値
 | 設定値 | ページ上の表記 |
