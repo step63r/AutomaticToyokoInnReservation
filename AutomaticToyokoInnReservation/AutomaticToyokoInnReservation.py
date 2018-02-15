@@ -1,28 +1,14 @@
 # coding: utf-8
 import sys
-import ConfigParser
 import inspect
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 import FileLogger, XPathConfig
 
-def GetReservation(driver, CHK_DATE):
+def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, CHKIN_VALUE):
     FileLogger.logger.log_info("Process Start {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     ret = True
-
-    # 設定ファイル読込
-    settings = ConfigParser.SafeConfigParser()
-    settings.read("./CrawlConfig.ini")
-    BASE_URL            = settings.get("URL", "BASE_URL")
-    HOTEL_ID            = settings.get("URL", "HOTEL_ID")
-    ROOM_TYPE           = settings.get("URL", "ROOM_TYPE")
-    LOGIN_ADDRESS       = settings.get("LOGIN", "LOGIN_ADDRESS")
-    LOGIN_PASS          = settings.get("LOGIN", "LOGIN_PASS")
-    LOGIN_TEL           = settings.get("LOGIN", "LOGIN_TEL")
-    ENABLE_NOSMOKING    = settings.get("CONFIG", "ENABLE_NOSMOKING")
-    ENABLE_SMOKING      = settings.get("CONFIG", "ENABLE_SMOKING")
-    CHKIN_VALUE         = settings.get("CONFIG", "CHKIN_VALUE")
     
     FileLogger.logger.log_info(u"サイトへアクセス中")
     # アクセス
