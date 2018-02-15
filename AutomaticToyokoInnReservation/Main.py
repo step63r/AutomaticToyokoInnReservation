@@ -42,9 +42,9 @@ if __name__ == "__main__":
 
     # 禁煙、喫煙文字列
     if ENABLE_NOSMOKING == '1':
-        str_smoke = "禁煙"
+        str_smoke = u"禁煙"
     else:
-        str_smoke = "喫煙"
+        str_smoke = u"喫煙"
 
     # スクリーンショット保存パス生成
     if not os.path.exists(PRTSCR_PATH):
