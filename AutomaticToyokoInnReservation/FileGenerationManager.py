@@ -1,6 +1,8 @@
 # coding: utf-8
 import glob
 import os
+import inspect
+import FileLogger
 
 def ManageGeneration(dir_path, count_alive, source_glob = ""):
     """
@@ -12,6 +14,7 @@ def ManageGeneration(dir_path, count_alive, source_glob = ""):
         - count_alive [int] 残すファイル数
         - source_glob [str] 対象ファイル形式（例：*.csv）（初期値：空文字）
     """
+    FileLogger.logger.log_info("Process Start {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     # ディレクトリがなければ何もしない
     if not os.path.exists(dir_path):
         return
@@ -27,4 +30,5 @@ def ManageGeneration(dir_path, count_alive, source_glob = ""):
             os.remove(oneFile)
         count += 1;
 
+    FileLogger.logger.log_info("Process End {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     return

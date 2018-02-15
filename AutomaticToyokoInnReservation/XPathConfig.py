@@ -19,3 +19,5 @@ XPATH_CHKINTIME = '//*[@id="mainArea"]/section[2]/div/div[2]/div/div[1]/table/tb
 XPATH_CONFIRM = '//*[@id="cnfrm"]/a/span'
 # 予約確定ボタン
 XPATH_OK = '//*[@id="entry"]'
+# 予約が正常に終了したことを確認する要素
+XPATH_CHK_VALIDATE = '/html/body/main/div/div/div[2]/p'

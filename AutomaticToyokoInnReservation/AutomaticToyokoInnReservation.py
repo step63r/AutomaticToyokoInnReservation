@@ -6,7 +6,19 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 import FileLogger, XPathConfig
 
-def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, CHKIN_VALUE):
+STR_VALIDATE = u"ご予約ありがとうございました。"
+
+def SearchRoom(driver, xpath):
+    ret = False
+    try:
+        driver.find_elements_by_xpath(xpath)[0].click()
+
+    except IndexError:
+        ret = False
+
+    return ret
+
+def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, PRIORITY, CHKIN_VALUE):
     FileLogger.logger.log_info("Process Start {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     ret = True
     
@@ -23,7 +35,7 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
         driver.find_elements_by_xpath(XPathConfig.XPATH_FORM_ADDRESS)[0].send_keys(LOGIN_ADDRESS)
         driver.find_elements_by_xpath(XPathConfig.XPATH_PASS)[0].send_keys(LOGIN_PASS)
         driver.find_elements_by_xpath(XPathConfig.XPATH_LOGINBTN)[0].click()
-    except:
+    except IndexError:
         pass
 
     FileLogger.logger.log_info(u"詳細ページへ移動中")
@@ -33,26 +45,9 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
     # 予約ページへ
     driver.get("{0}search/reserve/room?chckn_date={1}&room_type={2}".format(BASE_URL, CHK_DATE, ROOM_TYPE))
     
-    if ENABLE_NOSMOKING == '1':
-        FileLogger.logger.log_info(u"禁煙ルームを検索中")
-        try:
-            driver.find_elements_by_xpath(XPathConfig.XPATH_NOSMOKING)[0].click()
-        except:
-            # エレメントがない場合、予約不可
-            FileLogger.logger.log_warning(u"{0}の禁煙ルームは満室でした".format(CHK_DATE))
-            ret = False
-            
-    elif ENABLE_SMOKING == '1':
-        FileLogger.logger.log_info(u"喫煙ルームを検索中")
-        try:
-            driver.find_elements_by_xpath(XPathConfig.XPATH_SMOKING)[0].click()
-        except:
-            # エレメントがない場合、予約不可
-            FileLogger.logger.log_warning(u"{0}の喫煙ルームは満室でした".format(CHK_DATE))
-            ret = False
-    else:
+    if ENABLE_NOSMOKING == '0' and ENABLE_SMOKING == '0':
         FileLogger.logger.log_error(u"禁煙・喫煙の選択がありません")
-        ret = False
+        raise ValueError(u"禁煙・喫煙の選択がありません")    
     
     if ret:
         # 電話番号入力
@@ -66,5 +61,21 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
         # 確定ボタン押下
         driver.find_elements_by_xpath(XPathConfig.XPATH_OK)[0].click()
     
+    # 正しく予約できたことを確認
+    try:
+        str_chk = driver.find_element_by_xpath(XPathConfig.XPATH_CHK_VALIDATE)[0].text == STR_VALIDATE
+
+        if not str_chk == STR_VALIDATE:
+            # 要素はあるが文字が違う
+            FileLogger.logger.log_info(u"Webページの文字列：{0}".format(str_chk))
+            FileLogger.logger.log_info(u"正常な文字列：{0}".format(STR_VALIDATE))
+            FileLogger.logger.log_warning(u"空室を見つけましたが予約できませんでした")
+            ret = False
+
+    except IndexError:
+        # 要素がない
+        FileLogger.logger.log_warning(u"空室を見つけましたが予約できませんでした")
+        ret = False
+
     FileLogger.logger.log_info("Process End {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     return ret
