@@ -57,7 +57,7 @@ if __name__ == "__main__":
     while True:
         count += 1
         try:
-            r = AutomaticToyokoInnReservation.GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, PRIORITY, CHKIN_VALUE)
+            r = AutomaticToyokoInnReservation.GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, PRIORITY, CHKIN_VALUE, count)
 
         except:
             # 処理されていない例外の場合、スクリーンショットを取って終了する
@@ -70,11 +70,9 @@ if __name__ == "__main__":
             break
 
         if r:
-            #print(u"{0}  {1}  {2}  {3} ………… 予約成功（{4}）".format(CHK_DATE, HOTEL_ID, ROOM_TYPE, str_smoke, count))
             break
 
         else:
-            #print(u"{0}  {1}  {2}  {3} ………… 満室（{4}）".format(CHK_DATE, HOTEL_ID, ROOM_TYPE, str_smoke, count))
             FileLogger.logger.log_info(u"{0}秒待った後再実行します".format(TIME_SLEEP))
             time.sleep(TIME_SLEEP)
 

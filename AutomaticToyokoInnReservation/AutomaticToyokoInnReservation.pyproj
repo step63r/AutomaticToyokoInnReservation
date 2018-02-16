@@ -5,8 +5,7 @@
     <ProjectGuid>eced0ee6-fb14-4838-8b74-aa617f897efc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Main.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\AutomaticToyokoInnReservation</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>AutomaticToyokoInnReservation</Name>
