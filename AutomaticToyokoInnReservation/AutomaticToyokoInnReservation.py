@@ -4,6 +4,7 @@ import inspect
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
 import FileLogger, XPathConfig
 
 STR_VALIDATE = u"ご予約ありがとうございました。"
@@ -24,7 +25,7 @@ def SearchRoom(driver, xpath):
     try:
         driver.find_elements_by_xpath(xpath)[0].click()
 
-    except IndexError:
+    except (NoSuchElementException, IndexError):
         ret = False
 
     return ret
@@ -46,7 +47,7 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
         driver.find_elements_by_xpath(XPathConfig.XPATH_FORM_ADDRESS)[0].send_keys(LOGIN_ADDRESS)
         driver.find_elements_by_xpath(XPathConfig.XPATH_PASS)[0].send_keys(LOGIN_PASS)
         driver.find_elements_by_xpath(XPathConfig.XPATH_LOGINBTN)[0].click()
-    except IndexError:
+    except (NoSuchElementException, IndexError):
         pass
 
     FileLogger.logger.log_info(u"詳細ページへ移動中")
