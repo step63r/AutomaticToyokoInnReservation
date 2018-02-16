@@ -4,7 +4,6 @@ import inspect
 import time
 import os
 import sys
-import traceback
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -38,7 +37,7 @@ if __name__ == "__main__":
     PRTSCR_MAX_FILE     = int(settings.get("SCREENSHOT", "PRTSCR_MAX_FILE"))
 
     # ログオブジェクト生成
-    FileLogger.logger = FileLogger.FileLogger(LOG_PATH, LOG_NAME)
+    FileLogger.logger = FileLogger.FileLogger(LOG_PATH, LOG_NAME, backup_count=0)
     FileLogger.logger.log_info("Program Start")
     FileLogger.logger.log_info("Process Start {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
 
@@ -59,14 +58,15 @@ if __name__ == "__main__":
         try:
             r = AutomaticToyokoInnReservation.GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRESS, LOGIN_PASS, LOGIN_TEL, ENABLE_NOSMOKING, ENABLE_SMOKING, PRIORITY, CHKIN_VALUE, count)
 
-        except:
+        except Exception as ex:
             # 処理されていない例外の場合、スクリーンショットを取って終了する
             prtscr_path = u"{0}\\{1}_{2}_{3}.png".format(PRTSCR_PATH, datetime.now().strftime("%Y%m%d%H%M%S"), LOG_NAME, HOTEL_ID)
             sFile = driver.get_screenshot_as_file(prtscr_path)
             # 保存できたらファイルの世代管理
             if sFile:
                 FileGenerationManager.ManageGeneration(PRTSCR_PATH, PRTSCR_MAX_FILE, "*.png")
-            FileLogger.logger.log_error(traceback.format_exc())
+            #FileLogger.logger.log_error(traceback.format_exc())
+            FileLogger.logger.log_exception(ex)
             break
 
         if r:

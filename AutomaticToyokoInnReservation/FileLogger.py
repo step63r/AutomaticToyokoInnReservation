@@ -105,3 +105,15 @@ class FileLogger(object):
             - ログを出力する。
         """
         self.filelogger.critical(str)
+
+    def log_exception(self, str):
+        """
+        概略：
+            - 例外情報を出力する
+        引数：
+            - str [str] 出力メッセージ
+            - fileloggerが生成されている
+        戻り値：
+            - ログを出力する
+        """
+        self.filelogger.exception(str)

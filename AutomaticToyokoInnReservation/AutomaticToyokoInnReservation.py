@@ -122,7 +122,7 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
     
         # 正しく予約できたことを確認
         try:
-            str_chk = driver.find_element_by_xpath(XPathConfig.XPATH_CHK_VALIDATE)[0].text == STR_VALIDATE
+            str_chk = driver.find_elements_by_xpath(XPathConfig.XPATH_CHK_VALIDATE)[0].text == STR_VALIDATE
 
             if not str_chk == STR_VALIDATE:
                 # 要素はあるが文字が違う
@@ -137,6 +137,7 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
             ret = False
 
         if ret:
+            print(u"★　↑↑↑　予約しました　↑↑↑　★")
             FileLogger.logger.log_info(u"★　↑↑↑　予約しました　↑↑↑　★")
 
     FileLogger.logger.log_info("Process End {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
