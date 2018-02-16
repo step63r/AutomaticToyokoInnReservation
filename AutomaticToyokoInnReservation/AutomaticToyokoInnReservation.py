@@ -120,24 +120,24 @@ def GetReservation(driver, CHK_DATE, BASE_URL, HOTEL_ID, ROOM_TYPE, LOGIN_ADDRES
         # 確定ボタン押下
         driver.find_elements_by_xpath(XPathConfig.XPATH_OK)[0].click()
     
-    # 正しく予約できたことを確認
-    try:
-        str_chk = driver.find_element_by_xpath(XPathConfig.XPATH_CHK_VALIDATE)[0].text == STR_VALIDATE
+        # 正しく予約できたことを確認
+        try:
+            str_chk = driver.find_element_by_xpath(XPathConfig.XPATH_CHK_VALIDATE)[0].text == STR_VALIDATE
 
-        if not str_chk == STR_VALIDATE:
-            # 要素はあるが文字が違う
-            FileLogger.logger.log_info(u"Webページの文字列：{0}".format(str_chk))
-            FileLogger.logger.log_info(u"正常な文字列：{0}".format(STR_VALIDATE))
+            if not str_chk == STR_VALIDATE:
+                # 要素はあるが文字が違う
+                FileLogger.logger.log_info(u"Webページの文字列：{0}".format(str_chk))
+                FileLogger.logger.log_info(u"正常な文字列：{0}".format(STR_VALIDATE))
+                FileLogger.logger.log_warning(u"空室を見つけましたが予約できませんでした")
+                ret = False
+
+        except (NoSuchElementException, IndexError):
+            # 要素がない
             FileLogger.logger.log_warning(u"空室を見つけましたが予約できませんでした")
             ret = False
 
-    except IndexError:
-        # 要素がない
-        FileLogger.logger.log_warning(u"空室を見つけましたが予約できませんでした")
-        ret = False
-
-    if ret:
-        FileLogger.logger.log_info(u"★　↑↑↑　予約しました　↑↑↑　★")
+        if ret:
+            FileLogger.logger.log_info(u"★　↑↑↑　予約しました　↑↑↑　★")
 
     FileLogger.logger.log_info("Process End {0}.{1}".format(__name__, inspect.getframeinfo(inspect.currentframe())[2]))
     return ret

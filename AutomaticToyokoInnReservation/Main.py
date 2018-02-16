@@ -66,7 +66,7 @@ if __name__ == "__main__":
             # 保存できたらファイルの世代管理
             if sFile:
                 FileGenerationManager.ManageGeneration(PRTSCR_PATH, PRTSCR_MAX_FILE, "*.png")
-            FileLogger.logger.log_error(traceback.format_exc().decode('utf-8'))
+            FileLogger.logger.log_error(traceback.format_exc())
             break
 
         if r:
